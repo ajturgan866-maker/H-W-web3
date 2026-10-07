@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f1ff">
+  <title>Заявка на заселение</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{font-family:Manrope,Arial,sans-serif;color:#30283d;background:#f7f4fb;font-synthesis:none;text-rendering:optimizeLegibility}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 10%,#eee5ff 0,transparent 38%),radial-gradient(ellipse at 94% 88%,#eee9fa 0,transparent 35%),#f9f7fc}
+    .page{width:min(1080px,100%);margin:0 auto;padding:34px 24px 48px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:54px;color:#776a89;font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+    .brand{display:flex;align-items:center;gap:10px;color:#493766}
+    .brand-mark{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:#71539a;color:white;font-size:18px;box-shadow:0 6px 16px #71539a35}
+    .top-note{display:flex;align-items:center;gap:8px}
+    .live-dot{width:8px;height:8px;border-radius:50%;background:#8b70ad;box-shadow:0 0 0 4px #eae2f4}
+    .layout{display:grid;grid-template-columns:1fr 420px;align-items:center;gap:70px}
+    .intro{padding:10px 0 44px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #e5daf1;border-radius:999px;background:#ffffffa8;color:#73588f;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+    .eyebrow span{font-size:15px}
+    h1{max-width:540px;margin:21px 0 15px;color:#382a4b;font-size:clamp(38px,5vw,58px);line-height:1.08;letter-spacing:-.055em}
+    .intro-copy{max-width:480px;margin:0;color:#746b80;font-size:16px;line-height:1.8}
+    .steps{display:flex;gap:16px;margin-top:36px}
+    .step{display:flex;align-items:center;gap:10px;color:#746b80;font-size:13px;font-weight:700}
+    .step-num{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:#eee7f7;color:#725591}
+    .card{position:relative;overflow:hidden;padding:31px;border:1px solid #e9e1f0;border-radius:24px;background:#fff;box-shadow:0 24px 65px #503c6812,0 3px 10px #503c6808}
+    .card:before{position:absolute;top:0;left:0;width:100%;height:5px;background:linear-gradient(90deg,#8061a1,#b99bd8);content:""}
+    .card-heading{margin:0;color:#392d4a;font-size:23px;letter-spacing:-.04em}
+    .card-sub{margin:7px 0 25px;color:#8b8296;font-size:13px;line-height:1.6}
+    .field{margin-bottom:17px}
+    .field label{display:block;margin:0 0 8px;color:#51465f;font-size:13px;font-weight:800}
+    .input-wrap{position:relative}
+    .field-icon{position:absolute;top:50%;left:14px;transform:translateY(-50%);color:#9686a8;font-size:16px;pointer-events:none}
+    .field input{width:100%;height:50px;padding:0 15px 0 42px;border:1px solid #e7e0ed;border-radius:12px;background:#fcfbfd;color:#382d47;font:600 14px Manrope,Arial,sans-serif;outline:none;transition:border .18s,box-shadow .18s,background .18s}
+    .field input::placeholder{color:#b1a9bc;font-weight:500}
+    .field input:focus{border-color:#a486c2;background:white;box-shadow:0 0 0 4px #eee6f6}
+    .field input:invalid:not(:placeholder-shown){border-color:#d69ba3}
+    .hint{margin:7px 0 0 2px;color:#a39aa9;font-size:11px}
+    .submit{display:flex;justify-content:center;align-items:center;gap:9px;width:100%;height:52px;margin-top:7px;border:0;border-radius:13px;background:linear-gradient(135deg,#8263a5,#6e508f);color:#fff;font:800 14px Manrope,Arial,sans-serif;cursor:pointer;box-shadow:0 8px 16px #72568b30;transition:transform .16s,box-shadow .16s,opacity .16s}
+    .submit:hover{transform:translateY(-1px);box-shadow:0 11px 20px #72568b38}
+    .submit:disabled{cursor:wait;opacity:.7;transform:none}
+    .secure{display:flex;justify-content:center;align-items:center;gap:6px;margin:15px 0 0;color:#9a91a2;font-size:11px}
+    .result{margin-top:20px}
+    .result:empty{display:none}
+    .alert{padding:16px 17px;border:1px solid;border-radius:13px;font-size:13px;line-height:1.65}
+    .alert-success{border-color:#d7eadc;background:#f3faf4;color:#315d3b}
+    .alert-danger{border-color:#f0d9dc;background:#fff7f7;color:#873f49}
+    .alert-title{margin:0 0 6px;font-size:15px;font-weight:800}
+    .alert ul{margin:0;padding-left:19px}
+    .alert li{padding:1px 0}
+    .footer{margin-top:44px;color:#a098a9;font-size:11px;text-align:center}
+    @media(max-width:800px){
+      .page{padding:22px 18px 35px}
+      .topbar{margin-bottom:32px}
+      .layout{grid-template-columns:1fr;gap:22px;max-width:510px;margin:0 auto}
+      .intro{padding:0}
+      .intro-copy{font-size:14px}
+      .steps{margin-top:20px}
+      .card{padding:25px}
+      .footer{margin-top:26px}
+    }
+    @media(max-width:430px){
+      .top-note{font-size:10px}
+      .steps{gap:10px}
+      .step{font-size:11px}
+      .card{padding:24px 20px}
+      h1{font-size:39px}
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">⌂</span><span>Студенческий сервис</span></div>
+      <div class="top-note"><span class="live-dot" aria-hidden="true"></span>Заселение в общежитие</div>
+    </header>
+
+    <div class="layout">
+      <section class="intro" aria-labelledby="pageTitle">
+        <div class="eyebrow"><span aria-hidden="true">✦</span> Всё начинается здесь</div>
+        <h1 id="pageTitle">Ваше место<br>в общежитии</h1>
+        <p class="intro-copy">Заполните короткую заявку — мы проверим данные студента, корпуса и комнаты и сразу покажем результат.</p>
+        <div class="steps" aria-label="Этапы проверки">
+          <div class="step"><span class="step-num">01</span> Данные</div>
+          <div class="step"><span class="step-num">02</span> Проверка</div>
+          <div class="step"><span class="step-num">03</span> Результат</div>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="formTitle">
+        <h2 class="card-heading" id="formTitle">Проверить заявку</h2>
+        <p class="card-sub">Укажите идентификаторы, чтобы проверить возможность заселения.</p>
+
+        <form id="applicationForm">
+          <div class="field">
+            <label for="studentId">ID студента</label>
+            <div class="input-wrap">
+              <span class="field-icon" aria-hidden="true">♙</span>
+              <input type="number" id="studentId" name="studentId" placeholder="Например, 1042" min="1" step="1" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="buildingId">Номер корпуса</label>
+            <div class="input-wrap">
+              <span class="field-icon" aria-hidden="true">⌂</span>
+              <input type="number" id="buildingId" name="buildingId" placeholder="Например, 2" min="1" step="1" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="roomId">Номер комнаты</label>
+            <div class="input-wrap">
+              <span class="field-icon" aria-hidden="true">▦</span>
+              <input type="number" id="roomId" name="roomId" placeholder="Например, 315" min="1" step="1" required>
+            </div>
+            <p class="hint">Все поля обязательны для заполнения</p>
+          </div>
+
+          <button type="submit" class="submit" id="submitBtn">
+            <span>Проверить возможность заселения</span><span aria-hidden="true">→</span>
+          </button>
+        </form>
+
+        <p class="secure"><span aria-hidden="true">✦</span> Проверка займёт всего несколько секунд</p>
+        <div id="resultContainer" class="result" aria-live="polite" aria-atomic="true"></div>
+      </section>
+    </div>
+    <footer class="footer">Сервис проверки заявок на заселение</footer>
+  </main>
+
+  <script>
+    const BASE_URL = 'https://inai-col1.fishrungames.com';
+    const form = document.getElementById('applicationForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const resultContainer = document.getElementById('resultContainer');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      resultContainer.innerHTML = '';
+
+      const studentId = document.getElementById('studentId').value;
+      const buildingId = document.getElementById('buildingId').value;
+      const roomId = document.getElementById('roomId').value;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Проверяем данные...</span><span aria-hidden="true">…</span>';
+
+      try {
+        const [studentRes, buildingRes, roomRes] = await Promise.all([
+          fetch(`${BASE_URL}/students/${encodeURIComponent(studentId)}`),
+          fetch(`${BASE_URL}/buildings/${encodeURIComponent(buildingId)}`),
+          fetch(`${BASE_URL}/rooms/${encodeURIComponent(roomId)}`)
+        ]);
+
+        if (!studentRes.ok) throw new Error('Студент с таким ID не найден');
+        if (!buildingRes.ok) throw new Error('Корпус с таким номером не найден');
+        if (!roomRes.ok) throw new Error('Комната с таким номером не найдена');
+
+        const [student, building, room] = await Promise.all([
+          studentRes.json(),
+          buildingRes.json(),
+          roomRes.json()
+        ]);
+
+        const details = [
+          {ok: student.resident === false, text: 'Студент иногородний'},
+          {ok: building.forStudents === true, text: 'Корпус предназначен для студентов'},
+          {ok: room.available === true, text: 'Комната свободна'}
+        ];
+
+        renderResult(details.every(item => item.ok), details);
+      } catch (error) {
+        renderError(error.message || 'Не удалось проверить данные. Попробуйте позже.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Проверить возможность заселения</span><span aria-hidden="true">→</span>';
+      }
+    });
+
+    function renderResult(isApproved, details) {
+      const title = isApproved ? 'Заявка одобрена' : 'Пока заселиться не получится';
+      resultContainer.innerHTML = `
+        <div class="alert ${isApproved ? 'alert-success' : 'alert-danger'}" role="status">
+          <p class="alert-title">${title}</p>
+          <ul>
+            ${details.map(item => `<li>${item.text}${item.ok ? '' : ' — условие не выполнено'}</li>`).join('')}
+          </ul>
+        </div>`;
+    }
+
+    function renderError(message) {
+      const safeMessage = document.createElement('span');
+      safeMessage.textContent = message;
+
+      resultContainer.innerHTML = `
+        <div class="alert alert-danger" role="alert">
+          <p class="alert-title">Не удалось проверить заявку</p>
+        </div>`;
+      resultContainer.querySelector('.alert').append(safeMessage);
+    }
+  </script>
+</body>
+</html>
